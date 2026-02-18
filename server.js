@@ -1,7 +1,13 @@
-import app from './src/index.js'
+import app from "./src/index.js";
+import connectDB from "./src/config/db.js";
 
-
-
-app.listen(3000,()=>{
-    console.log('Listenin on port 3000')
+const PORT = 3000
+connectDB()
+.then(()=>{
+    app.listen(PORT , ()=>{
+        console.log(`Listening on ${PORT}`)
+    })
+})
+.catch((ex)=>{
+    console.log(ex.message)
 })
