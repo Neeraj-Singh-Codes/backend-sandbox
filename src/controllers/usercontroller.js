@@ -64,3 +64,21 @@ export async function deleteUser(req, res) {
     return res.json({ message: "Error Occured While deleting user" });
   }
 }
+
+export async function loginUser(req, res){
+  try{
+  const {username, password} = req.body
+
+  const user = await userModel.findOne({username})
+  if(!user){return res.status(400).json({message : 'Wrong Username or Password'})}
+
+  const compare = await bcrypt.compare(password, user.password)
+  if(!compare){
+    return res.status(400).json({message : 'Wrong Username or Password'})
+  }
+  return res.json({message : 'Loggggged in successfully'})
+}catch(ex){
+  console.log(ex.message)
+}
+ 
+}
